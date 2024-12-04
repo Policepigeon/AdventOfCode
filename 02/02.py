@@ -1004,28 +1004,56 @@ input_data = """8 10 13 14 12
 # Split input into lines
 lines = input_data.strip().split("\n")
 
-# Initialize safe report counter
+# Initialize safe report count
 safe_count = 0
 
-#got rid of inline loops for readability
+# Process each report
 for line in lines:
-    # Convert the line into a list of integers
     levels = list(map(int, line.split()))
-    
-    # Calculate the differences between adjacent levels
+
+    # Calculate differences between adjacent levels
     diffs = []
     for i in range(len(levels) - 1):
         diffs.append(levels[i + 1] - levels[i])
-    
-    # Check if differences are within the allowed range
-    valid_diffs = all(-3 <= diff <= 3 for diff in diffs)
-    
-    # Check if the sequence is strictly increasing or decreasing
-    is_increasing = all(diff > 0 for diff in diffs)
-    is_decreasing = all(diff < 0 for diff in diffs)
-    
-    # Increment safe count if the report is valid
-    if valid_diffs and (is_increasing or is_decreasing):
+
+    # Check if the original sequence is safe
+    is_safe = True
+    for d in diffs:
+        if not (-3 <= d <= -1 or 1 <= d <= 3):
+            is_safe = False
+            break
+
+    if is_safe:
+        safe_count += 1
+        continue
+
+    # Try removing each level to see if the modified sequence becomes safe
+    can_be_safe = False
+    for remove_idx in range(len(levels)):
+        # Create a modified version of the levels list without the removed level
+        modified_levels = []
+        for i in range(len(levels)):
+            if i != remove_idx:
+                modified_levels.append(levels[i])
+
+        # Calculate differences for the modified levels
+        modified_diffs = []
+        for i in range(len(modified_levels) - 1):
+            modified_diffs.append(modified_levels[i + 1] - modified_levels[i])
+
+        # Check if the modified sequence is safe
+        is_safe_after_removal = True
+        for d in modified_diffs:
+            if not (-3 <= d <= -1 or 1 <= d <= 3):
+                is_safe_after_removal = False
+                break
+
+        if is_safe_after_removal:
+            can_be_safe = True
+            break
+
+    if can_be_safe:
         safe_count += 1
 
+# Print the final safe report count
 print(safe_count)
