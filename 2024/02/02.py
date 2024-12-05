@@ -999,7 +999,7 @@ input_data = """8 10 13 14 12
 93 92 90 88 87 84 82 80
 17 14 11 9 8 6 4
 56 57 60 63 65 67 68 70
-"""  # Your full input here.
+"""
 
 # Split input into lines
 lines = input_data.strip().split("\n")
