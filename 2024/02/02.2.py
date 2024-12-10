@@ -1017,9 +1017,7 @@ for line in lines:
             if incorrect_count > 1:
                 break
 
-    if incorrect_count <= 1:
-        correct +=1
-
+ 
 
 # Split input into lines
 lines = input_data.strip().split("\n")
@@ -1047,4 +1045,6 @@ for line in lines:
     if valid_diffs and (is_increasing or is_decreasing):
         safe_count += 1
 print(correct)
+print(safe_count)
+safe_count += correct
 print(safe_count)
