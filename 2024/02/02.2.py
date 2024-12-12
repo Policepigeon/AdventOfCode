@@ -21,6 +21,7 @@ for line in lines:
         if diff != level:
             incorrect_count += 1
             if incorrect_count > 1:
+                correct +=1
                 break
 
  
